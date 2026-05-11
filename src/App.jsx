@@ -1,19 +1,21 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import TopEntities from './components/TopEntities';
 import NewsByEntity from './components/NewsByEntity';
+import SentimentTimeseries from './components/SentimentTimeseries';
+import TrendingToday from './components/TrendingToday';
 import './App.css';
+
+const TABS = [
+    { path: '/',          key: 'top',       label: '🏆 Топ сущности' },
+    { path: '/news',      key: 'search',    label: '🔍 Поиск по сущности' },
+    { path: '/trends',    key: 'trends',    label: '📈 Тренды' },
+    { path: '/sentiment', key: 'sentiment', label: '💭 Тональность' },
+];
 
 function AppContent() {
     const location = useLocation();
-    const [activeTab, setActiveTab] = useState(() => {
-        // Определяем активную вкладку по текущему пути
-        return location.pathname === '/news' ? 'search' : 'top';
-    });
-
-    const handleTabChange = (tab) => {
-        setActiveTab(tab);
-    };
+    const activeKey = TABS.find(t => t.path === location.pathname)?.key ?? 'top';
 
     return (
         <div className="App">
@@ -23,28 +25,21 @@ function AppContent() {
             </header>
 
             <div className="tab-bar">
-                <Link to="/" style={{ textDecoration: 'none' }}>
-                    <button
-                        className={`tab-btn ${activeTab === 'top' ? 'active' : ''}`}
-                        onClick={() => handleTabChange('top')}
-                    >
-                        🏆 Топ сущности
-                    </button>
-                </Link>
-                <Link to="/news" style={{ textDecoration: 'none' }}>
-                    <button
-                        className={`tab-btn ${activeTab === 'search' ? 'active' : ''}`}
-                        onClick={() => handleTabChange('search')}
-                    >
-                        🔍 Поиск по сущности
-                    </button>
-                </Link>
+                {TABS.map(tab => (
+                    <Link key={tab.key} to={tab.path} style={{ textDecoration: 'none' }}>
+                        <button className={`tab-btn ${activeKey === tab.key ? 'active' : ''}`}>
+                            {tab.label}
+                        </button>
+                    </Link>
+                ))}
             </div>
 
             <div className="content">
                 <Routes>
-                    <Route path="/" element={<TopEntities />} />
-                    <Route path="/news" element={<NewsByEntity />} />
+                    <Route path="/"          element={<TopEntities />} />
+                    <Route path="/news"      element={<NewsByEntity />} />
+                    <Route path="/trends"    element={<TrendingToday />} />
+                    <Route path="/sentiment" element={<SentimentTimeseries />} />
                 </Routes>
             </div>
         </div>

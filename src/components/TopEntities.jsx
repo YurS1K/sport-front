@@ -45,10 +45,13 @@ const TopEntities = () => {
         }
     };
 
-    // Обработчик клика по сущности
     const handleEntityClick = (entityName) => {
-        // Переходим на страницу поиска с параметром entity
         navigate(`/news?entity=${encodeURIComponent(entityName)}`);
+    };
+
+    const handleSentimentClick = (e, entityName) => {
+        e.stopPropagation();
+        navigate(`/sentiment?entity=${encodeURIComponent(entityName)}&days=30`);
     };
 
     if (loading) return <div className="loading">Загрузка...</div>;
@@ -81,7 +84,15 @@ const TopEntities = () => {
                             <div className="entity-rank">#{index + 1}</div>
                             <div className="entity-name">{entity.entity}</div>
                             <div className="entity-count">📊 {entity.count} упоминаний</div>
-                            <div className="click-hint">🔍 Нажмите для поиска</div>
+                            <div className="entity-actions">
+                                <span className="action-hint">🔍 Новости</span>
+                                <span
+                                    className="action-hint sentiment-link"
+                                    onClick={(e) => handleSentimentClick(e, entity.entity)}
+                                >
+                                    💭 Тональность
+                                </span>
+                            </div>
                         </div>
                     ))}
                 </div>

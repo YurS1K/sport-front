@@ -92,19 +92,29 @@
     color: rgba(255, 255, 255, 0.2);
 }
 
-.click-hint {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    font-size: 11px;
-    color: #999;
+.entity-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.entity-card.clickable:hover .click-hint {
+.entity-card.clickable:hover .entity-actions {
     opacity: 1;
+}
+
+.action-hint {
+    font-size: 11px;
     color: white;
+    opacity: 0.85;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.action-hint:hover {
+    opacity: 1;
+    text-decoration: underline;
 }
 
 .entity-card.clickable:active {
