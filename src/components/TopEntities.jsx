@@ -10,7 +10,7 @@ const TopEntities = () => {
     const [entities, setEntities] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [limit, setLimit] = useState(10);
+    const [limit, setLimit] = useState(5);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -51,7 +51,12 @@ const TopEntities = () => {
 
     const handleSentimentClick = (e, entityName) => {
         e.stopPropagation();
-        navigate(`/sentiment?entity=${encodeURIComponent(entityName)}&days=30`);
+        navigate(`/sentiment?entity=${encodeURIComponent(entityName)}&days=7`);
+    };
+
+    const handleNewsClick = (e, entityName) => {
+        e.stopPropagation();
+        navigate(`/news?entity=${encodeURIComponent(entityName)}`);
     };
 
     if (loading) return <div className="loading">Загрузка...</div>;
@@ -85,13 +90,18 @@ const TopEntities = () => {
                             <div className="entity-name">{entity.entity}</div>
                             <div className="entity-count">📊 {entity.count} упоминаний</div>
                             <div className="entity-actions">
-                                <span className="action-hint">🔍 Новости</span>
-                                <span
-                                    className="action-hint sentiment-link"
+                                <button
+                                    className="action-btn news-btn"
+                                    onClick={(e) => handleNewsClick(e, entity.entity)}
+                                >
+                                    🔍 Новости
+                                </button>
+                                <button
+                                    className="action-btn sentiment-btn"
                                     onClick={(e) => handleSentimentClick(e, entity.entity)}
                                 >
                                     💭 Тональность
-                                </span>
+                                </button>
                             </div>
                         </div>
                     ))}

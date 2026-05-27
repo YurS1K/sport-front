@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NewsCard.css';
 
 const NewsCard = ({ news }) => {
     const [expanded, setExpanded] = useState(false);
+    const navigate = useNavigate();
 
     const formatDate = (dateString) => {
         return new Date(dateString).toLocaleString('ru-RU', {
@@ -30,6 +32,10 @@ const NewsCard = ({ news }) => {
             case 'neutral': return '😐';
             default: return '❓';
         }
+    };
+
+    const handleEntityClick = (entity) => {
+        navigate(`/news?entity=${encodeURIComponent(entity)}`);
     };
 
     return (
@@ -74,7 +80,16 @@ const NewsCard = ({ news }) => {
                         <strong>🔍 Сущности:</strong>
                         <div className="entities-list">
                             {news.entities.map((entity, idx) => (
-                                <span key={idx} className="entity">{entity}</span>
+                                <span
+                                    key={idx}
+                                    className="entity clickable-entity"
+                                    onClick={() => handleEntityClick(entity)}
+                                    role="button"
+                                    tabIndex={0}
+                                    onKeyPress={(e) => e.key === 'Enter' && handleEntityClick(entity)}
+                                >
+                                    {entity}
+                                </span>
                             ))}
                         </div>
                     </div>

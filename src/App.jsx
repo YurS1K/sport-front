@@ -9,7 +9,6 @@ import './App.css';
 const TABS = [
     { path: '/',          key: 'top',       label: '🏆 Топ сущности' },
     { path: '/news',      key: 'search',    label: '🔍 Поиск по сущности' },
-    { path: '/trends',    key: 'trends',    label: '📈 Тренды' },
     { path: '/sentiment', key: 'sentiment', label: '💭 Тональность' },
 ];
 
@@ -38,7 +37,6 @@ function AppContent() {
                 <Routes>
                     <Route path="/"          element={<TopEntities />} />
                     <Route path="/news"      element={<NewsByEntity />} />
-                    <Route path="/trends"    element={<TrendingToday />} />
                     <Route path="/sentiment" element={<SentimentTimeseries />} />
                 </Routes>
             </div>

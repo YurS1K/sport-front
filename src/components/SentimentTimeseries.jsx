@@ -34,14 +34,14 @@ const SentimentTimeseries = () => {
     const navigate = useNavigate();
 
     const [entityName, setEntityName] = useState('');
-    const [days, setDays] = useState(30);
+    const [days, setDays] = useState(7);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const entityFromUrl = searchParams.get('entity');
-        const daysFromUrl = Number(searchParams.get('days')) || 30;
+        const daysFromUrl = Number(searchParams.get('days')) || 7;
         if (entityFromUrl) {
             setEntityName(entityFromUrl);
             setDays(daysFromUrl);
@@ -182,8 +182,8 @@ const SentimentTimeseries = () => {
                                         <Tooltip content={<CustomTooltip />} />
                                         <Legend wrapperStyle={{ paddingTop: 16 }} />
                                         <Area type="monotone" dataKey="Позитивные" stackId="1" stroke="#4caf50" fill="url(#gradPositive)" strokeWidth={2} />
-                                        <Area type="monotone" dataKey="Нейтральные" stackId="1" stroke="#ff9800" fill="url(#gradNeutral)" strokeWidth={2} />
-                                        <Area type="monotone" dataKey="Негативные"  stackId="1" stroke="#f44336" fill="url(#gradNegative)" strokeWidth={2} />
+                                        <Area type="monotone" dataKey="Нейтральные" stackId="2" stroke="#ff9800" fill="url(#gradNeutral)" strokeWidth={2} />
+                                        <Area type="monotone" dataKey="Негативные"  stackId="3" stroke="#f44336" fill="url(#gradNegative)" strokeWidth={2} />
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>

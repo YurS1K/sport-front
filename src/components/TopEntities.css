@@ -70,7 +70,7 @@
     }
 }
 
-/* TopEntities.css - добавьте эти стили */
+/* Стили для кликабельной карточки */
 .entity-card.clickable {
     cursor: pointer;
     transition: all 0.3s ease;
@@ -92,31 +92,80 @@
     color: rgba(255, 255, 255, 0.2);
 }
 
+/* Блок с кнопками действий */
 .entity-actions {
     display: flex;
     gap: 12px;
-    margin-top: 8px;
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    margin-top: 15px;
+    justify-content: flex-start;
 }
 
-.entity-card.clickable:hover .entity-actions {
-    opacity: 1;
-}
-
-.action-hint {
-    font-size: 11px;
-    color: white;
-    opacity: 0.85;
+/* Стили кнопок */
+.action-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 600;
     cursor: pointer;
-    transition: opacity 0.2s;
+    transition: all 0.2s ease;
+    background: white;
+    color: #333;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
-.action-hint:hover {
-    opacity: 1;
-    text-decoration: underline;
+.action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
 }
 
-.entity-card.clickable:active {
-    transform: translateY(-2px) scale(0.98);
+.action-btn:active {
+    transform: translateY(0);
+}
+
+.news-btn {
+    background: white;
+    color: #667eea;
+    border: 1px solid #667eea;
+}
+
+.news-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.sentiment-btn {
+    background: white;
+    color: #764ba2;
+    border: 1px solid #764ba2;
+}
+
+.sentiment-btn:hover {
+    background: #764ba2;
+    color: white;
+}
+
+/* При наведении на карточку кнопки становятся ярче на тёмном фоне */
+.entity-card.clickable:hover .action-btn {
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.entity-card.clickable:hover .news-btn {
+    background: white;
+    color: #667eea;
+}
+
+.entity-card.clickable:hover .news-btn:hover {
+    background: #667eea;
+    color: white;
+}
+
+.entity-card.clickable:hover .sentiment-btn {
+    background: white;
+    color: #764ba2;
+}
+
+.entity-card.clickable:hover .sentiment-btn:hover {
+    background: #764ba2;
+    color: white;
 }
