@@ -18,6 +18,10 @@
     color: var(--text-primary);
 }
 
+.app-header h1 svg {
+    color: var(--accent);
+}
+
 .app-header p {
     color: var(--text-secondary);
     font-size: 0.9rem;

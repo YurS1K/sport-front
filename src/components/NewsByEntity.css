@@ -215,3 +215,7 @@
 .skeleton-title { height: 1.2rem; width: 80%; margin-bottom: 0.8rem; }
 .skeleton-meta { height: 0.8rem; width: 60%; margin-bottom: 1rem; }
 .skeleton-text { height: 4rem; width: 100%; margin-bottom: 1rem; }
+
+.search-history svg {
+    color: var(--accent);
+}

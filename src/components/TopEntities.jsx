@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './TopEntities.css';
-import { IconNews, IconTrending } from './Icons';
+import { IconNews, IconTrending, IconChart } from './Icons';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -69,14 +69,14 @@ const TopEntities = () => {
                             <div className="entity-rank">#{idx + 1}</div>
                             <div className="entity-name">{entity.entity}</div>
                             <div className="entity-count">
-                                <IconNews size={12} style={{ marginRight: '4px' }} /> {entity.count} упоминаний
+                                <IconChart size={20} style={{ marginRight: '4px' }} /> {entity.count} упоминаний
                             </div>
                             <div className="entity-actions">
                                 <button className="action-btn" onClick={(e) => handleNewsClick(e, entity.entity)}>
-                                    <IconNews size={14} /> Новости
+                                    <IconNews size={20} /> Новости
                                 </button>
                                 <button className="action-btn" onClick={(e) => handleSentimentClick(e, entity.entity)}>
-                                    <IconTrending size={14} /> Тональность
+                                    <IconTrending size={20} /> Тональность
                                 </button>
                             </div>
                         </div>

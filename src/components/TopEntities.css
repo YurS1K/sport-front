@@ -96,3 +96,11 @@
     border-color: var(--accent);
     color: white;
 }
+.entity-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}

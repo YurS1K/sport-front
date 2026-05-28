@@ -29,10 +29,12 @@
 .news-meta {
     display: flex;
     gap: 1rem;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: #cbd5e1;
     flex-wrap: wrap;
 }
+
+
 
 .news-body {
     padding: 1rem;
@@ -100,9 +102,35 @@
 }
 
 .news-sentiment {
-    display: inline-block;
-    padding: 0.2rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.7rem;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.2rem 0;
+}
+.news-sentiment svg {
+    width: 24px;
+    height: 24px;
+}
+
+.sentiment-text {
+    line-height: 1;
+}
+
+.news-card svg {
+    color: var(--accent);
+}
+
+.news-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.news-footer div {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
 }

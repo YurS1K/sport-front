@@ -3,13 +3,13 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import TopEntities from './components/TopEntities';
 import NewsByEntity from './components/NewsByEntity';
 import SentimentTimeseries from './components/SentimentTimeseries';
-import { IconNews, IconTrending } from './components/Icons';
+import { IconDashboard, IconTrending, IconNews, IconChart } from './components/Icons';
 import './App.css';
 
 const TABS = [
-    { path: '/', label: 'Рейтинг сущностей', icon: <IconTrending size={16} style={{ marginRight: '6px' }} /> },
-    { path: '/news', label: 'Поиск по сущности', icon: <IconNews size={16} style={{ marginRight: '6px' }} /> },
-    { path: '/sentiment', label: 'Динамика тональности', icon: <IconTrending size={16} style={{ marginRight: '6px' }} /> },
+    { path: '/', label: 'Рейтинг сущностей', icon: <IconChart size={20} color="currentColor" /> },
+    { path: '/news', label: 'Поиск по сущности', icon: <IconNews size={20} color="currentColor" /> },
+    { path: '/sentiment', label: 'Динамика тональности', icon: <IconTrending size={20} color="currentColor" /> },
 ];
 
 function AppContent() {
@@ -18,15 +18,21 @@ function AppContent() {
     return (
         <div className="app">
             <header className="app-header">
-                <h1>📊 Sports Analytics</h1>
+                <h1>
+                    <IconDashboard size={32} style={{ marginRight: '12px', verticalAlign: 'middle', color: 'var(--accent)' }} />
+                    Sports Analytics
+                </h1>
                 <p>Мониторинг упоминаний и тональности в спортивных СМИ</p>
             </header>
 
             <div className="tab-bar">
                 {TABS.map(tab => (
                     <Link key={tab.path} to={tab.path}>
-                        <button className="tab-btn">
-                            {tab.icon} {tab.label}
+                        <button className={`tab-btn ${location.pathname === tab.path ? 'active' : ''}`}>
+                            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
+                                {tab.icon}
+                                {tab.label}
+                            </span>
                         </button>
                     </Link>
                 ))}

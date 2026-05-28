@@ -4,6 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import NewsCard from '../NewsCard';
 import './NewsByEntity.css';
+import {IconSearchEntity} from "./Icons";
 
 const API_BASE_URL = 'http://localhost:8080/api';
 const MAX_DAYS_RANGE = 365;
@@ -25,7 +26,6 @@ const NewsByEntity = () => {
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
 
-    // Функция для отображения страниц с многоточиями
     const getVisiblePages = (current, total) => {
         const delta = 2;
         const left = Math.max(0, current - delta);
@@ -53,9 +53,18 @@ const NewsByEntity = () => {
     }, []);
 
     useEffect(() => {
-        const today = new Date().toISOString().split('T')[0];
-        if (!dateFrom) setDateFrom(today);
-        if (!dateTo) setDateTo(today);
+        const today = new Date();
+        const dayOfWeek = today.getDay(); // 0 - воскресенье, 1 - понедельник, ...
+        const diffToMonday = (dayOfWeek === 0 ? 6 : dayOfWeek - 1);
+        const monday = new Date(today);
+        monday.setDate(today.getDate() - diffToMonday);
+        const sunday = new Date(monday);
+        sunday.setDate(monday.getDate() + 6);
+
+        const formatDate = (date) => date.toISOString().split('T')[0];
+
+        if (!dateFrom) setDateFrom(formatDate(monday));
+        if (!dateTo) setDateTo(formatDate(sunday));
     }, []);
 
     const validateDates = (from, to) => {
@@ -166,7 +175,7 @@ const NewsByEntity = () => {
 
             {searchHistory.length > 0 && (
                 <div className="search-history">
-                    <div className="search-history-title">🔍 Недавние запросы:</div>
+                    <div className="search-history-title"><IconSearchEntity size={20} style={{ marginRight: '4px' }} /> Недавние запросы:</div>
                     <div className="history-items">
                         {searchHistory.map((q, idx) => (
                             <button key={idx} className="history-item" onClick={() => handleHistoryClick(q)}>

@@ -5,7 +5,7 @@ import {
     AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 import './SentimentTimeseries.css';
-import { IconPositive, IconNegative, IconNeutral } from './Icons';
+import {IconPositive, IconNegative, IconNeutral, IconNews} from './Icons';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 const DAYS_OPTIONS = [7, 14, 30, 90];
@@ -121,11 +121,47 @@ const SentimentTimeseries = () => {
                         <>
                             <div className="sentiment-summary">
                                 <div className="summary-card positive">
-                                    <div className="summary-label"><IconPositive size={14} color="#22c55e" style={{ marginRight: '4px' }} /> Позитивные</div><div className="summary-value">{totals.positive}</div><div>{Math.round(totals.positive/totalAll*100)}%</div></div>
+                                    <div className="summary-content">
+                                        <div className="summary-icon">
+                                            <IconPositive size={36} color="#22c55e" />
+                                        </div>
+                                        <div className="summary-info">
+                                            <div className="summary-label">Позитивные</div>
+                                            <div className="summary-numbers">
+                                                <div className="summary-value">{totals.positive}</div>
+                                                <div className="summary-percent">{Math.round(totals.positive / totalAll * 100)}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="summary-card neutral">
-                                    <div className="summary-label"><IconNeutral size={14} color="#eab308" /> Нейтральные</div><div className="summary-value">{totals.neutral}</div><div>{Math.round(totals.neutral/totalAll*100)}%</div></div>
+                                    <div className="summary-content">
+                                        <div className="summary-icon">
+                                            <IconNeutral size={36} color="#eab308" />
+                                        </div>
+                                        <div className="summary-info">
+                                            <div className="summary-label">Нейтральные</div>
+                                            <div className="summary-numbers">
+                                                <div className="summary-value">{totals.neutral}</div>
+                                                <div className="summary-percent">{Math.round(totals.neutral / totalAll * 100)}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="summary-card negative">
-                                    <div className="summary-label"><IconNegative size={14} color="#ef4444" /> Негативные</div><div className="summary-value">{totals.negative}</div><div>{Math.round(totals.negative/totalAll*100)}%</div></div>
+                                    <div className="summary-content">
+                                        <div className="summary-icon">
+                                            <IconNegative size={36} color="#ef4444" />
+                                        </div>
+                                        <div className="summary-info">
+                                            <div className="summary-label">Негативные</div>
+                                            <div className="summary-numbers">
+                                                <div className="summary-value">{totals.negative}</div>
+                                                <div className="summary-percent">{Math.round(totals.negative / totalAll * 100)}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                             <div className="chart-container">
@@ -144,7 +180,7 @@ const SentimentTimeseries = () => {
                             </div>
 
                             <div className="search-news-link">
-                                <button onClick={() => navigate(`/news?entity=${encodeURIComponent(data.entity)}`)}>📰 Все новости об этой сущности</button>
+                                <button onClick={() => navigate(`/news?entity=${encodeURIComponent(data.entity)}`)}><IconNews size={20} color="currentColor" /> Все новости об этой сущности</button>
                             </div>
                         </>
                     )}
