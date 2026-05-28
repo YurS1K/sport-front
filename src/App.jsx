@@ -3,31 +3,30 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import TopEntities from './components/TopEntities';
 import NewsByEntity from './components/NewsByEntity';
 import SentimentTimeseries from './components/SentimentTimeseries';
-import TrendingToday from './components/TrendingToday';
+import { IconNews, IconTrending } from './components/Icons';
 import './App.css';
 
 const TABS = [
-    { path: '/',          key: 'top',       label: '🏆 Топ сущности' },
-    { path: '/news',      key: 'search',    label: '🔍 Поиск по сущности' },
-    { path: '/sentiment', key: 'sentiment', label: '💭 Тональность' },
+    { path: '/', label: 'Рейтинг сущностей', icon: <IconTrending size={16} style={{ marginRight: '6px' }} /> },
+    { path: '/news', label: 'Поиск по сущности', icon: <IconNews size={16} style={{ marginRight: '6px' }} /> },
+    { path: '/sentiment', label: 'Динамика тональности', icon: <IconTrending size={16} style={{ marginRight: '6px' }} /> },
 ];
 
 function AppContent() {
     const location = useLocation();
-    const activeKey = TABS.find(t => t.path === location.pathname)?.key ?? 'top';
 
     return (
-        <div className="App">
+        <div className="app">
             <header className="app-header">
-                <h1>📰 Sports News Analytics</h1>
-                <p>Анализ спортивных новостей по сущностям</p>
+                <h1>📊 Sports Analytics</h1>
+                <p>Мониторинг упоминаний и тональности в спортивных СМИ</p>
             </header>
 
             <div className="tab-bar">
                 {TABS.map(tab => (
-                    <Link key={tab.key} to={tab.path} style={{ textDecoration: 'none' }}>
-                        <button className={`tab-btn ${activeKey === tab.key ? 'active' : ''}`}>
-                            {tab.label}
+                    <Link key={tab.path} to={tab.path}>
+                        <button className="tab-btn">
+                            {tab.icon} {tab.label}
                         </button>
                     </Link>
                 ))}
@@ -35,8 +34,8 @@ function AppContent() {
 
             <div className="content">
                 <Routes>
-                    <Route path="/"          element={<TopEntities />} />
-                    <Route path="/news"      element={<NewsByEntity />} />
+                    <Route path="/" element={<TopEntities />} />
+                    <Route path="/news" element={<NewsByEntity />} />
                     <Route path="/sentiment" element={<SentimentTimeseries />} />
                 </Routes>
             </div>

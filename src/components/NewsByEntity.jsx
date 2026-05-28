@@ -1,4 +1,4 @@
-// components/NewsByEntity.jsx
+
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
@@ -21,19 +21,37 @@ const NewsByEntity = () => {
     const [searched, setSearched] = useState(false);
     const [sentimentFilter, setSentimentFilter] = useState('all');
     const [searchHistory, setSearchHistory] = useState([]);
-
-    // Пагинация
     const [currentPage, setCurrentPage] = useState(0);
     const [totalPages, setTotalPages] = useState(0);
     const [totalElements, setTotalElements] = useState(0);
 
-    // Загрузка истории поиска
+    // Функция для отображения страниц с многоточиями
+    const getVisiblePages = (current, total) => {
+        const delta = 2;
+        const left = Math.max(0, current - delta);
+        const right = Math.min(total - 1, current + delta);
+
+        let pages = new Set([0, total - 1]);
+        for (let i = left; i <= right; i++) pages.add(i);
+        pages = Array.from(pages).sort((a, b) => a - b);
+
+        const result = [];
+        let last = null;
+        for (const p of pages) {
+            if (last !== null && p - last > 1) {
+                result.push(p - last === 2 ? last + 1 : '...');
+            }
+            result.push(p);
+            last = p;
+        }
+        return result;
+    };
+
     useEffect(() => {
         const saved = localStorage.getItem('searchHistory');
         if (saved) setSearchHistory(JSON.parse(saved));
     }, []);
 
-    // Установка дат по умолчанию (сегодня)
     useEffect(() => {
         const today = new Date().toISOString().split('T')[0];
         if (!dateFrom) setDateFrom(today);
@@ -42,60 +60,32 @@ const NewsByEntity = () => {
 
     const validateDates = (from, to) => {
         if (!from || !to) {
-            setValidationError('Пожалуйста, выберите обе даты');
+            setValidationError('Выберите обе даты');
             return false;
         }
-        const fromDate = new Date(from);
-        const toDate = new Date(to);
-        if (isNaN(fromDate) || isNaN(toDate)) {
-            setValidationError('Некорректный формат даты');
-            return false;
-        }
+        const fromDate = new Date(from), toDate = new Date(to);
         if (fromDate > toDate) {
-            setValidationError('Дата начала не может быть позже даты окончания');
+            setValidationError('Начало не может быть позже конца');
             return false;
         }
-        const diffTime = Math.abs(toDate - fromDate);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        const diffDays = Math.ceil((toDate - fromDate) / (1000 * 60 * 60 * 24));
         if (diffDays > MAX_DAYS_RANGE) {
-            setValidationError(`Период не может превышать ${MAX_DAYS_RANGE} дней`);
+            setValidationError(`Период не более ${MAX_DAYS_RANGE} дней`);
             return false;
         }
         setValidationError('');
         return true;
     };
 
-    const handleDateFromChange = (e) => {
-        const newFrom = e.target.value;
-        setDateFrom(newFrom);
-        if (dateTo) validateDates(newFrom, dateTo);
-        else setValidationError('');
-    };
-
-    const handleDateToChange = (e) => {
-        const newTo = e.target.value;
-        setDateTo(newTo);
-        if (dateFrom) validateDates(dateFrom, newTo);
-        else setValidationError('');
-    };
-
     const performSearch = async (searchEntity, from, to, sentiment, page) => {
         if (!searchEntity.trim() || !from || !to) return;
         if (!validateDates(from, to)) return;
-
         try {
             setLoading(true);
             setError(null);
             const sentimentParam = sentiment === 'all' ? null : sentiment;
             const response = await axios.get(`${API_BASE_URL}/entities/news/paged`, {
-                params: {
-                    name: searchEntity.trim(),
-                    from,
-                    to,
-                    sentiment: sentimentParam,
-                    page,
-                    size: PAGE_SIZE,
-                }
+                params: { name: searchEntity.trim(), from, to, sentiment: sentimentParam, page, size: PAGE_SIZE }
             });
             setNews(response.data.content);
             setTotalPages(response.data.totalPages);
@@ -112,19 +102,9 @@ const NewsByEntity = () => {
 
     const handleSearch = async (e) => {
         e.preventDefault();
-        if (!entityName.trim()) {
-            setError('Введите название сущности');
-            return;
-        }
-        if (!dateFrom || !dateTo) {
-            setError('Выберите обе даты периода');
-            return;
-        }
-        if (!validateDates(dateFrom, dateTo)) {
-            setError(validationError);
-            return;
-        }
-        // При новом поиске сбрасываем страницу на 0
+        if (!entityName.trim()) return setError('Введите название сущности');
+        if (!dateFrom || !dateTo) return setError('Выберите период');
+        if (!validateDates(dateFrom, dateTo)) return setError(validationError);
         setCurrentPage(0);
         setSearchParams({ entity: entityName.trim() });
         await performSearch(entityName, dateFrom, dateTo, sentimentFilter, 0);
@@ -140,12 +120,9 @@ const NewsByEntity = () => {
         setEntityName(query);
         setCurrentPage(0);
         setSearchParams({ entity: query });
-        if (dateFrom && dateTo) {
-            performSearch(query, dateFrom, dateTo, sentimentFilter, 0);
-        }
+        if (dateFrom && dateTo) performSearch(query, dateFrom, dateTo, sentimentFilter, 0);
     };
 
-    // Обработка смены фильтра тональности
     const handleSentimentFilter = (newFilter) => {
         setSentimentFilter(newFilter);
         if (entityName && dateFrom && dateTo) {
@@ -154,14 +131,12 @@ const NewsByEntity = () => {
         }
     };
 
-    // Переключение страницы
     const handlePageChange = (newPage) => {
         if (newPage < 0 || newPage >= totalPages) return;
         setCurrentPage(newPage);
         performSearch(entityName, dateFrom, dateTo, sentimentFilter, newPage);
     };
 
-    // Обработка параметра entity из URL
     useEffect(() => {
         const entityFromUrl = searchParams.get('entity');
         if (entityFromUrl && dateFrom && dateTo) {
@@ -174,35 +149,25 @@ const NewsByEntity = () => {
         <div className="news-by-entity">
             <form onSubmit={handleSearch} className="search-form">
                 <div className="form-group">
-                    <label>Сущность:</label>
-                    <input
-                        type="text"
-                        value={entityName}
-                        onChange={(e) => setEntityName(e.target.value)}
-                        placeholder="Например: Messi, Ronaldo"
-                        required
-                    />
+                    <label>Сущность (имя, команда, лига)</label>
+                    <input type="text" value={entityName} onChange={(e) => setEntityName(e.target.value)} placeholder="Пример: Месси, Зенит, НБА" required />
                 </div>
-
                 <div className="form-group">
-                    <label>Период:</label>
-                    <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-                        <input type="date" value={dateFrom} onChange={handleDateFromChange} required />
+                    <label>Период</label>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                        <input type="date" value={dateFrom} onChange={(e) => { setDateFrom(e.target.value); validateDates(e.target.value, dateTo); }} required />
                         <span>—</span>
-                        <input type="date" value={dateTo} onChange={handleDateToChange} required />
+                        <input type="date" value={dateTo} onChange={(e) => { setDateTo(e.target.value); validateDates(dateFrom, e.target.value); }} required />
                     </div>
-                    {validationError && <div style={{ color: '#f44336', fontSize: '12px', marginTop: '5px' }}>{validationError}</div>}
+                    {validationError && <div style={{ color: '#ef4444', fontSize: '0.75rem', marginTop: '0.3rem' }}>{validationError}</div>}
                 </div>
-
-                <button type="submit" disabled={loading || !!validationError}>
-                    {loading ? 'Поиск...' : 'Найти'}
-                </button>
+                <button type="submit" disabled={loading || !!validationError}>{loading ? 'Поиск...' : 'Найти новости'}</button>
             </form>
 
             {searchHistory.length > 0 && (
                 <div className="search-history">
-                    <div className="search-history-title">📜 Недавние поиски:</div>
-                    <div className="search-history-items">
+                    <div className="search-history-title">🔍 Недавние запросы:</div>
+                    <div className="history-items">
                         {searchHistory.map((q, idx) => (
                             <button key={idx} className="history-item" onClick={() => handleHistoryClick(q)}>
                                 {q}
@@ -216,46 +181,39 @@ const NewsByEntity = () => {
 
             {searched && !loading && (
                 <div className="results">
-                    <h3>Результаты по "{entityName}" ({totalElements})</h3>
-
+                    <h3>Результаты по «{entityName}» — {totalElements} новостей</h3>
                     {totalElements > 0 && (
-                        <>
-                            <div className="result-filters">
-                                <button className={`filter-btn ${sentimentFilter === 'all' ? 'active' : ''}`} onClick={() => handleSentimentFilter('all')}>Все</button>
-                                <button className={`filter-btn ${sentimentFilter === 'positive' ? 'active' : ''}`} onClick={() => handleSentimentFilter('positive')}>😊 Позитивные</button>
-                                <button className={`filter-btn ${sentimentFilter === 'neutral' ? 'active' : ''}`} onClick={() => handleSentimentFilter('neutral')}>😐 Нейтральные</button>
-                                <button className={`filter-btn ${sentimentFilter === 'negative' ? 'active' : ''}`} onClick={() => handleSentimentFilter('negative')}>😠 Негативные</button>
-                            </div>
-                        </>
-                    )}
-
-                    {news.length === 0 ? (
-                        <div className="no-results">
-                            {totalElements === 0 ? `Новостей с "${entityName}" в выбранном диапазоне и тональности не найдено` : `Нет новостей на этой странице`}
+                        <div className="result-filters">
+                            <button className={`filter-btn ${sentimentFilter === 'all' ? 'active' : ''}`} onClick={() => handleSentimentFilter('all')}>Все</button>
+                            <button className={`filter-btn ${sentimentFilter === 'positive' ? 'active' : ''}`} onClick={() => handleSentimentFilter('positive')}>Позитивные</button>
+                            <button className={`filter-btn ${sentimentFilter === 'neutral' ? 'active' : ''}`} onClick={() => handleSentimentFilter('neutral')}>Нейтральные</button>
+                            <button className={`filter-btn ${sentimentFilter === 'negative' ? 'active' : ''}`} onClick={() => handleSentimentFilter('negative')}>Негативные</button>
                         </div>
+                    )}
+                    {news.length === 0 ? (
+                        <div className="no-data">Новостей не найдено</div>
                     ) : (
                         <>
                             <div className="news-list">
                                 {news.map((item, idx) => <NewsCard key={item.id || idx} news={item} />)}
                             </div>
-
                             {totalPages > 1 && (
                                 <div className="pagination">
-                                    <button className="page-btn" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0}>
-                                        ← Назад
-                                    </button>
-                                    {[...Array(totalPages)].map((_, i) => (
-                                        <button
-                                            key={i}
-                                            className={`page-btn ${currentPage === i ? 'active' : ''}`}
-                                            onClick={() => handlePageChange(i)}
-                                        >
-                                            {i + 1}
-                                        </button>
-                                    ))}
-                                    <button className="page-btn" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages - 1}>
-                                        Вперёд →
-                                    </button>
+                                    <button className="page-btn" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 0}>←</button>
+                                    {getVisiblePages(currentPage, totalPages).map((item, idx) =>
+                                        item === '...' ? (
+                                            <span key={`dots-${idx}`} className="page-dots">...</span>
+                                        ) : (
+                                            <button
+                                                key={item}
+                                                className={`page-btn ${currentPage === item ? 'active' : ''}`}
+                                                onClick={() => handlePageChange(item)}
+                                            >
+                                                {item + 1}
+                                            </button>
+                                        )
+                                    )}
+                                    <button className="page-btn" onClick={() => handlePageChange(currentPage + 1)} disabled={currentPage === totalPages - 1}>→</button>
                                 </div>
                             )}
                         </>
@@ -264,13 +222,12 @@ const NewsByEntity = () => {
             )}
 
             {loading && (
-                <div className="results">
+                <div>
                     {[1, 2].map(i => (
                         <div key={i} className="skeleton-card">
                             <div className="skeleton skeleton-title"></div>
                             <div className="skeleton skeleton-meta"></div>
                             <div className="skeleton skeleton-text"></div>
-                            <div className="skeleton skeleton-tags"></div>
                         </div>
                     ))}
                 </div>

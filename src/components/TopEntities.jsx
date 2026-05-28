@@ -1,8 +1,8 @@
-// components/TopEntities.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './TopEntities.css';
+import { IconNews, IconTrending } from './Icons';
 
 const API_BASE_URL = 'http://localhost:8080/api';
 
@@ -20,53 +20,37 @@ const TopEntities = () => {
     const fetchTopEntities = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${API_BASE_URL}/entities/top`, {
-                params: { limit }
-            });
-
-            // Фильтруем некорректные сущности
-            const filteredData = response.data.filter(item => {
-                if (item.entity === ', ' || item.entity === ',' || item.entity.trim() === '') {
-                    return false;
-                }
-                if (item.entity.trim().length < 2) {
-                    return false;
-                }
-                return true;
-            });
-
-            setEntities(filteredData);
+            const response = await axios.get(`${API_BASE_URL}/entities/top`, { params: { limit } });
+            const filtered = response.data.filter(item =>
+                item.entity && item.entity.trim().length > 1 && item.entity !== ', '
+            );
+            setEntities(filtered);
             setError(null);
         } catch (err) {
-            setError('Ошибка при загрузке данных: ' + err.message);
-            console.error(err);
+            setError('Ошибка загрузки: ' + err.message);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleEntityClick = (entityName) => {
-        navigate(`/news?entity=${encodeURIComponent(entityName)}`);
-    };
-
-    const handleSentimentClick = (e, entityName) => {
+    const handleNewsClick = (e, name) => {
         e.stopPropagation();
-        navigate(`/sentiment?entity=${encodeURIComponent(entityName)}&days=7`);
+        navigate(`/news?entity=${encodeURIComponent(name)}`);
     };
 
-    const handleNewsClick = (e, entityName) => {
+    const handleSentimentClick = (e, name) => {
         e.stopPropagation();
-        navigate(`/news?entity=${encodeURIComponent(entityName)}`);
+        navigate(`/sentiment?entity=${encodeURIComponent(name)}&days=7`);
     };
 
-    if (loading) return <div className="loading">Загрузка...</div>;
+    if (loading) return <div className="loading">Загрузка данных...</div>;
     if (error) return <div className="error">{error}</div>;
 
     return (
         <div className="top-entities">
             <div className="controls">
                 <label>
-                    Количество сущностей:
+                    Количество:
                     <select value={limit} onChange={(e) => setLimit(Number(e.target.value))}>
                         <option value={5}>5</option>
                         <option value={10}>10</option>
@@ -80,27 +64,19 @@ const TopEntities = () => {
                 <div className="no-data">Нет данных для отображения</div>
             ) : (
                 <div className="entities-grid">
-                    {entities.map((entity, index) => (
-                        <div
-                            key={entity.entity}
-                            className="entity-card clickable"
-                            onClick={() => handleEntityClick(entity.entity)}
-                        >
-                            <div className="entity-rank">#{index + 1}</div>
+                    {entities.map((entity, idx) => (
+                        <div key={entity.entity} className="entity-card">
+                            <div className="entity-rank">#{idx + 1}</div>
                             <div className="entity-name">{entity.entity}</div>
-                            <div className="entity-count">📊 {entity.count} упоминаний</div>
+                            <div className="entity-count">
+                                <IconNews size={12} style={{ marginRight: '4px' }} /> {entity.count} упоминаний
+                            </div>
                             <div className="entity-actions">
-                                <button
-                                    className="action-btn news-btn"
-                                    onClick={(e) => handleNewsClick(e, entity.entity)}
-                                >
-                                    🔍 Новости
+                                <button className="action-btn" onClick={(e) => handleNewsClick(e, entity.entity)}>
+                                    <IconNews size={14} /> Новости
                                 </button>
-                                <button
-                                    className="action-btn sentiment-btn"
-                                    onClick={(e) => handleSentimentClick(e, entity.entity)}
-                                >
-                                    💭 Тональность
+                                <button className="action-btn" onClick={(e) => handleSentimentClick(e, entity.entity)}>
+                                    <IconTrending size={14} /> Тональность
                                 </button>
                             </div>
                         </div>

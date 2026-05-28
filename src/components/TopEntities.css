@@ -1,171 +1,98 @@
-/* TopEntities.css */
 .top-entities {
-    animation: fadeIn 0.5s ease;
+    width: 100%;
 }
 
 .controls {
-    margin-bottom: 30px;
-    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.controls label {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .controls select {
-    margin-left: 10px;
-    padding: 8px 15px;
-    border-radius: 8px;
-    border: 2px solid #e0e0e0;
-    font-size: 14px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
     cursor: pointer;
 }
 
 .entities-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
 }
 
 .entity-card {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    padding: 20px;
-    border-radius: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    transition: all 0.2s ease;
     position: relative;
-    overflow: hidden;
+    cursor: pointer;
 }
 
 .entity-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    background: #2d3a4f;
+    transform: translateY(-2px);
 }
 
 .entity-rank {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    font-weight: bold;
-    color: rgba(0,0,0,0.1);
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: rgba(255,255,255,0.08);
 }
 
 .entity-name {
-    font-size: 20px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-    padding-right: 30px;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+    padding-right: 2rem;
 }
 
 .entity-count {
-    font-size: 14px;
-    color: #666;
+    font-size: 0.85rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Стили для кликабельной карточки */
-.entity-card.clickable {
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.entity-card.clickable:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-}
-
-.entity-card.clickable:hover .entity-name,
-.entity-card.clickable:hover .entity-count {
-    color: white;
-}
-
-.entity-card.clickable:hover .entity-rank {
-    color: rgba(255, 255, 255, 0.2);
-}
-
-/* Блок с кнопками действий */
 .entity-actions {
     display: flex;
-    gap: 12px;
-    margin-top: 15px;
-    justify-content: flex-start;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
 }
 
-/* Стили кнопок */
 .action-btn {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 8px;
-    font-size: 13px;
-    font-weight: 600;
+    background: transparent;
+    border: 1px solid var(--accent);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    transition: all 0.2s;
     cursor: pointer;
-    transition: all 0.2s ease;
-    background: white;
-    color: #333;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
 }
 
 .action-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-}
-
-.action-btn:active {
-    transform: translateY(0);
-}
-
-.news-btn {
-    background: white;
-    color: #667eea;
-    border: 1px solid #667eea;
-}
-
-.news-btn:hover {
-    background: #667eea;
-    color: white;
-}
-
-.sentiment-btn {
-    background: white;
-    color: #764ba2;
-    border: 1px solid #764ba2;
-}
-
-.sentiment-btn:hover {
-    background: #764ba2;
-    color: white;
-}
-
-/* При наведении на карточку кнопки становятся ярче на тёмном фоне */
-.entity-card.clickable:hover .action-btn {
-    background: rgba(255, 255, 255, 0.9);
-}
-
-.entity-card.clickable:hover .news-btn {
-    background: white;
-    color: #667eea;
-}
-
-.entity-card.clickable:hover .news-btn:hover {
-    background: #667eea;
-    color: white;
-}
-
-.entity-card.clickable:hover .sentiment-btn {
-    background: white;
-    color: #764ba2;
-}
-
-.entity-card.clickable:hover .sentiment-btn:hover {
-    background: #764ba2;
+    background: var(--accent);
+    border-color: var(--accent);
     color: white;
 }
