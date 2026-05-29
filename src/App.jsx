@@ -19,7 +19,7 @@ function AppContent() {
         <div className="app">
             <header className="app-header">
                 <h1>
-                    <IconDashboard size={32} style={{ marginRight: '12px', verticalAlign: 'middle', color: 'var(--accent)' }} />
+                    <IconDashboard size={45} style={{ marginRight: '15px', verticalAlign: 'middle', color: 'var(--accent)' }} />
                     Sports Analytics
                 </h1>
                 <p>Мониторинг упоминаний и тональности в спортивных СМИ</p>

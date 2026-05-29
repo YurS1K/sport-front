@@ -111,8 +111,8 @@ const SentimentTimeseries = () => {
             {data && !loading && (
                 <>
                     <div>
-                        <h3 style={{ fontSize: '1.2rem', marginBottom: '0.2rem' }}>Динамика тональности: <span style={{ color: 'var(--accent)' }}>{data.entity}</span></h3>
-                        <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>{data.from} — {data.to}</p>
+                        <h3 style={{ fontSize: '1.4rem', marginBottom: '0.2rem' }}>Динамика тональности: <span style={{ color: 'var(--accent)' }}>{data.entity}</span></h3>
+                        <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>{data.from} — {data.to}</p>
                     </div>
 
                     {totalAll === 0 ? (
@@ -165,10 +165,10 @@ const SentimentTimeseries = () => {
                             </div>
 
                             <div className="chart-container">
-                                <ResponsiveContainer width="100%" height={320}>
+                                <ResponsiveContainer width="100%" height={400}>
                                     <AreaChart data={chartData}>
                                         <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
-                                        <XAxis dataKey="date" tick={{ fill: '#94a3b8', fontSize: 11 }} />
+                                        <XAxis dataKey="date" tick={{ fill: '#94a3b8', fontSize: 20 }} />
                                         <YAxis tick={{ fill: '#94a3b8' }} allowDecimals={false} />
                                         <Tooltip content={<CustomTooltip />} />
                                         <Legend />
@@ -180,7 +180,7 @@ const SentimentTimeseries = () => {
                             </div>
 
                             <div className="search-news-link">
-                                <button onClick={() => navigate(`/news?entity=${encodeURIComponent(data.entity)}`)}><IconNews size={20} color="currentColor" /> Все новости об этой сущности</button>
+                                <button onClick={() => navigate(`/news?entity=${encodeURIComponent(data.entity)}`)}><IconNews size={26} color="currentColor" /> Все новости об этой сущности</button>
                             </div>
                         </>
                     )}

@@ -69,14 +69,15 @@ const TopEntities = () => {
                             <div className="entity-rank">#{idx + 1}</div>
                             <div className="entity-name">{entity.entity}</div>
                             <div className="entity-count">
-                                <IconChart size={20} style={{ marginRight: '4px' }} /> {entity.count} упоминаний
+                                <IconChart size={25} className="entity-count-icon" />
+                                <span className="entity-count-text">{entity.count} упоминаний</span>
                             </div>
                             <div className="entity-actions">
                                 <button className="action-btn" onClick={(e) => handleNewsClick(e, entity.entity)}>
-                                    <IconNews size={20} /> Новости
+                                    <IconNews size={25} /> Новости
                                 </button>
                                 <button className="action-btn" onClick={(e) => handleSentimentClick(e, entity.entity)}>
-                                    <IconTrending size={20} /> Тональность
+                                    <IconTrending size={25} /> Тональность
                                 </button>
                             </div>
                         </div>

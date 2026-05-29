@@ -9,20 +9,21 @@
 }
 
 .controls label {
-    font-size: 0.85rem;
+    font-size: 1.5rem;
     color: var(--text-secondary);
     display: flex;
     align-items: center;
     gap: 0.5rem;
+    font-weight: 500;
 }
 
 .controls select {
     background: var(--bg-surface);
     border: 1px solid var(--border);
     color: var(--text-primary);
-    padding: 0.4rem 0.8rem;
+    padding: 0.8rem 1.6rem;
     border-radius: var(--radius);
-    font-size: 0.85rem;
+    font-size: 1rem;
     cursor: pointer;
 }
 
@@ -57,7 +58,7 @@
 }
 
 .entity-name {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     margin-bottom: 0.5rem;
     color: var(--text-primary);
@@ -65,9 +66,17 @@
 }
 
 .entity-count {
-    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+   /* делаем полужирным */
     color: var(--accent);
     margin-bottom: 1rem;
+}
+
+.entity-count-text {
+    font-size: 1.2rem;
+    font-weight: 400;
 }
 
 .entity-actions {
