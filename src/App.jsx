@@ -3,13 +3,17 @@ import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react
 import TopEntities from './components/TopEntities';
 import NewsByEntity from './components/NewsByEntity';
 import SentimentTimeseries from './components/SentimentTimeseries';
-import { IconDashboard, IconTrending, IconNews, IconChart } from './components/Icons';
+import AuthorStats from './components/AuthorStats';
+import { IconDashboard, IconTrending, IconNews, IconChart, IconCompare, IconAuthor} from './components/Icons';
+import CompareEntities from './components/CompareEntities';
 import './App.css';
 
 const TABS = [
-    { path: '/', label: 'Рейтинг сущностей', icon: <IconChart size={20} color="currentColor" /> },
-    { path: '/news', label: 'Поиск по сущности', icon: <IconNews size={20} color="currentColor" /> },
-    { path: '/sentiment', label: 'Динамика тональности', icon: <IconTrending size={20} color="currentColor" /> },
+    { path: '/', label: 'Рейтинг сущностей', icon: <IconChart size={20} /> },
+    { path: '/news', label: 'Поиск по сущности', icon: <IconNews size={20} /> },
+    { path: '/sentiment', label: 'Динамика тональности', icon: <IconTrending size={20} /> },
+    { path: '/compare', label: 'Сравнить сущности', icon: <IconCompare size={20} /> },
+    { path: '/authors', label: 'Авторы', icon: <IconAuthor size={20} /> },
 ];
 
 function AppContent() {
@@ -43,6 +47,8 @@ function AppContent() {
                     <Route path="/" element={<TopEntities />} />
                     <Route path="/news" element={<NewsByEntity />} />
                     <Route path="/sentiment" element={<SentimentTimeseries />} />
+                    <Route path="/compare" element={<CompareEntities />} />
+                    <Route path="/authors" element={<AuthorStats />} />
                 </Routes>
             </div>
         </div>

@@ -1,0 +1,109 @@
+.compare-entities {
+    width: 100%;
+}
+
+.compare-form {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.compare-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+    flex-wrap: wrap;
+}
+
+.compare-row input {
+    flex: 1;
+    background: var(--bg-dark);
+    border: 1px solid var(--border);
+    padding: 0.9rem;
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.compare-row button {
+    background: var(--accent);
+    border: none;
+    padding: 0 4rem;
+    border-radius: var(--radius);
+    font-weight: 800;
+    color: white;
+    cursor: pointer;
+}
+
+.compare-row button:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.days-quick-filter {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.days-quick-btn {
+    background: var(--bg-dark);
+    border: 1px solid var(--accent);
+    padding: 0.4rem 1rem;
+    border-radius: 30px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    color: var(--text-primary);
+}
+
+.days-quick-btn.active {
+    background: var(--accent);
+    color: white;
+}
+
+.compare-summary {
+    margin-bottom: 1.5rem;
+}
+
+.compare-summary h3 {
+    font-size: 1.4rem;
+}
+
+.chart-container {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    border: 1px solid var(--border);
+}
+
+.chart-container h4 {
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.compare-stats {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.stat-card {
+    background: var(--bg-surface);
+    border-left: 4px solid var(--accent);
+    padding: 1rem;
+    border-radius: var(--radius);
+    flex: 1;
+    min-width: 200px;
+}
+
+.stat-card .stat-title {
+    font-weight: 700;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    color: var(--accent);
+}

@@ -1,0 +1,160 @@
+.author-stats {
+    width: 100%;
+}
+
+.controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 1.5rem;
+}
+
+.controls label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+}
+
+.controls select {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+.authors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1rem;
+}
+
+.author-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1rem;
+    position: relative;
+    transition: all 0.2s ease;
+}
+
+.author-card:hover {
+    background: #2d3a4f;
+    transform: translateY(-2px);
+}
+
+.author-rank {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.08);
+}
+
+.author-name-wrapper {
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 0.75rem;
+}
+
+.author-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.2px;
+}
+
+.author-stats-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+}
+
+.author-count {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.author-count-icon {
+    vertical-align: middle;
+    line-height: 1;
+}
+
+.author-count-text {
+    font-size: 1.2rem;
+}
+
+.author-sentiment {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.7rem 1.5rem;
+    border-radius: 30px;
+}
+
+.sentiment-value {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.author-sources {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.source-badge {
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.ria-badge {
+    background: var(--bg-dark);
+    border: 1px solid #f97316;
+    color: var(--text-primary);
+}
+
+.champ-badge {
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    border: 1px solid var(--accent);
+}
+
+.author-entities {
+    margin-top: 0.5rem;
+}
+
+.entities-label {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+}
+
+.entities-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.entity-tag {
+    background: var(--bg-dark);
+    padding: 0.2rem 0.6rem;
+    border-radius: 20px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    border: 1px solid var(--accent);
+}

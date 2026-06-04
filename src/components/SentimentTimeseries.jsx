@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import {
-    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+    AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell,
 } from 'recharts';
 import './SentimentTimeseries.css';
 import {IconPositive, IconNegative, IconNeutral, IconNews} from './Icons';
+
 
 const API_BASE_URL = 'http://localhost:8080/api';
 const DAYS_OPTIONS = [7, 14, 30, 90];
@@ -35,6 +36,7 @@ const SentimentTimeseries = () => {
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const [sourceStats, setSourceStats] = useState(null);
 
     useEffect(() => {
         const entityFromUrl = searchParams.get('entity');
@@ -43,8 +45,9 @@ const SentimentTimeseries = () => {
             setEntityName(entityFromUrl);
             setDays(daysFromUrl);
             fetchTimeseries(entityFromUrl, daysFromUrl);
+            fetchSourceStats(entityFromUrl, daysFromUrl);   // добавить
         }
-    }, []);
+    }, [searchParams]);
 
     const fetchTimeseries = async (name, d) => {
         if (!name.trim()) return;
@@ -60,11 +63,24 @@ const SentimentTimeseries = () => {
         }
     };
 
+    const fetchSourceStats = async (name, d) => {
+        if (!name.trim()) return;
+        try {
+            const response = await axios.get(`${API_BASE_URL}/entities/sources-stats`, {
+                params: { name: name.trim(), days: d }
+            });
+            setSourceStats(response.data);
+        } catch (err) {
+            console.error("Ошибка загрузки статистики источников", err);
+        }
+    };
+
     const handleSearch = (e) => {
         e.preventDefault();
         if (!entityName.trim()) return;
         setSearchParams({ entity: entityName.trim(), days });
         fetchTimeseries(entityName, days);
+        fetchSourceStats(entityName, days);
     };
 
     const handleDaysChange = (d) => {
@@ -178,6 +194,38 @@ const SentimentTimeseries = () => {
                                     </AreaChart>
                                 </ResponsiveContainer>
                             </div>
+
+                            {sourceStats && (sourceStats.ria + sourceStats.championat) > 0 && (
+                                <div className="sources-chart">
+                                    <h4>Упоминания по источникам</h4>
+                                    <div className="sources-container">
+                                        <ResponsiveContainer width={700} height={400}>
+                                            <PieChart>
+                                                <Pie
+                                                    data={[
+                                                        { name: 'РИА Новости', value: sourceStats.ria },
+                                                        { name: 'Чемпионат', value: sourceStats.championat }
+                                                    ]}
+                                                    cx="50%"
+                                                    cy="50%"
+                                                    labelLine={false}
+                                                    outerRadius={150}
+                                                    dataKey="value"
+                                                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                                                >
+                                                    <Cell fill="#f97316" />
+                                                    <Cell fill="#3b82f6" />
+                                                </Pie>
+                                                <Tooltip />
+                                            </PieChart>
+                                        </ResponsiveContainer>
+                                        <div className="source-legend">
+                                            <div><span className="ria-badge"></span> РИА Новости: {sourceStats.ria}</div>
+                                            <div><span className="champ-badge"></span> Чемпионат: {sourceStats.championat}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
 
                             <div className="search-news-link">
                                 <button onClick={() => navigate(`/news?entity=${encodeURIComponent(data.entity)}`)}><IconNews size={26} color="currentColor" /> Все новости об этой сущности</button>

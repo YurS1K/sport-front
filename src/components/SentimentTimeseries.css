@@ -198,3 +198,53 @@
 .search-news-link button {
     font-size: 1.2rem;
 }
+
+.sources-chart {
+    background: var(--bg-surface);
+    border-radius: var(--radius);
+    padding: 1rem;
+    margin: 1.5rem 0;
+    border: 1px solid var(--border);
+}
+
+.sources-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+}
+
+.source-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.source-legend span {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.source-legend .ria-badge {
+    background-color: #f97316;
+}
+
+.source-legend .champ-badge {
+    background-color: #3b82f6;
+}
+
+.sources-chart h4 {
+    font-size: 1.2rem;
+}
+
+.recharts-wrapper tspan {
+    font-size: 1.2rem;
+    font-weight: 600;
+}

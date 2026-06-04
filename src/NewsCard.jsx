@@ -58,7 +58,12 @@ const NewsCard = ({ news }) => {
             </div>
             <div className="news-body">
                 <p className="news-text">
-                    {expanded ? news.text : `${news.text.substring(0, 280)}...`}
+                    {(expanded ? news.text : news.text.substring(0, 280)).split('\n').map((line, i) => (
+                        <React.Fragment key={i}>
+                            {line}
+                            {i !== (expanded ? news.text.split('\n').length - 1 : Math.min(280, news.text.length)) && <br />}
+                        </React.Fragment>
+                    ))}
                     {news.text.length > 280 && (
                         <button className="expand-btn" onClick={() => setExpanded(!expanded)}>
                             {expanded ? 'Свернуть' : 'Читать далее'}
@@ -66,10 +71,28 @@ const NewsCard = ({ news }) => {
                     )}
                 </p>
                 <div className="news-footer">
-                    <div><IconTag size={20} style={{ marginRight: '4px' }} /> <strong>Теги:</strong> <div className="tags-list">{news.tags.map((tag, idx) => <span key={idx} className="tag">{tag}</span>)}</div></div>
-                    <div><IconEntity size={20} style={{ marginRight: '4px' }} /> <strong>Сущности:</strong> <div className="entities-list">{news.entities.map((entity, idx) => (
-                        <span key={idx} className="entity clickable-entity" onClick={() => handleEntityClick(entity)}>{entity}</span>
-                    ))}</div></div>
+                    <div className="meta-section">
+                        <div className="meta-label">
+                            <IconTag size={20} style={{ marginRight: '4px' }} /> <strong>Теги:</strong>
+                        </div>
+                        <div className="tags-list">
+                            {news.tags.map((tag, idx) => (
+                                <span key={idx} className="tag">{tag}</span>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="meta-section">
+                        <div className="meta-label">
+                            <IconEntity size={20} style={{ marginRight: '4px' }} /> <strong>Сущности:</strong>
+                        </div>
+                        <div className="entities-list">
+                            {news.entities.map((entity, idx) => (
+                                <span key={idx} className="entity clickable-entity" onClick={() => handleEntityClick(entity)}>
+                    {entity}
+                </span>
+                            ))}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
