@@ -21,7 +21,9 @@
     font-weight: 600;
     transition: color 0.2s;
 }
-
+.news-header h3 a {
+    color: var(--text-primary);
+}
 .news-header h3 a:hover {
     color: var(--accent);
 }
@@ -31,7 +33,8 @@
     gap: 1rem;
     font-size: 1.2rem;
     font-weight: 500;
-    color: #cbd5e1;
+    color: var(--text-secondary);
+    background: var(--bg-surface);
     flex-wrap: wrap;
 }
 
@@ -40,12 +43,11 @@
 }
 
 .news-text {
-    color: #e2e8f0;
+    color: var(--text-primary);
     font-size: 1.2rem;
     line-height: 1.55;
     margin-bottom: 1rem;
     font-weight: 400;
-    font-family: var(--font-sans);
     letter-spacing: normal;
 }
 

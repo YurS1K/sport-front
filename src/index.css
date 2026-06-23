@@ -1,14 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap');
 
 :root {
-    --bg-dark: #0f172a;
-    --bg-card: #1e293b;
-    --bg-surface: #334155;
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --accent: #f97316;
-    --accent-hover: #ea580c;
-    --border: #334155;
+    --bg-dark: #f8fafc;      /* основной фон страницы (светло-серый) */
+    --bg-card: #ffffff;       /* фон карточек (белый) */
+    --bg-surface: #f1f5f9;    /* фон дополнительных элементов (чуть темнее) */
+    --text-primary: #000;  /* основной текст (тёмно-сланцевый) */
+    --text-secondary: #000; /* второстепенный текст (серый) */
+    --accent: #f97316;        /* акцентный цвет (оранжевый) */
+    --accent-hover: #ea580c;  /* акцент при наведении */
+    --border: #e2e8f0;
     --danger: #ef4444;
     --success: #22c55e;
     --warning: #eab308;

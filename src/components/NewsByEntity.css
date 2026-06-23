@@ -52,7 +52,7 @@
 
 .search-form input[type="date"]:hover {
     border-color: var(--accent-hover);
-    background: #1e293b;
+    background: var(--bg-dark);
 }
 
 .search-form input[type="date"]:focus {
@@ -202,7 +202,7 @@
 }
 
 .skeleton {
-    background: #2d3a4f;
+    background: var(--bg-card);
     border-radius: 4px;
     animation: pulse 1.2s infinite;
 }

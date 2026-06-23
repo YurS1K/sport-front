@@ -19,7 +19,7 @@ const formatDate = (dateStr) => {
 const CustomTooltip = ({ active, payload, label }) => {
     if (!active || !payload?.length) return null;
     return (
-        <div style={{ background: '#1e293b', border: '1px solid #334155', borderRadius: '6px', padding: '0.5rem 0.8rem' }}>
+        <div style={{ background: '#f1f5f9', border: '1px solid #334155', borderRadius: '6px', padding: '0.5rem 0.8rem' }}>
             <p style={{ margin: 0, fontWeight: 'bold' }}>{label}</p>
             {payload.map(p => (
                 <p key={p.name} style={{ margin: 0, color: p.color }}>{p.name}: {p.value}</p>
@@ -183,7 +183,7 @@ const SentimentTimeseries = () => {
                             <div className="chart-container">
                                 <ResponsiveContainer width="100%" height={400}>
                                     <AreaChart data={chartData}>
-                                        <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                                        <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                                         <XAxis dataKey="date" tick={{ fill: '#94a3b8', fontSize: 20 }} />
                                         <YAxis tick={{ fill: '#94a3b8' }} allowDecimals={false} />
                                         <Tooltip content={<CustomTooltip />} />

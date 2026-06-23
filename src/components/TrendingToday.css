@@ -61,7 +61,7 @@
 }
 
 .trend-card:hover {
-    background: #2d3a4f;
+    background: var(--bg-dark);
     transform: translateY(-2px);
 }
 

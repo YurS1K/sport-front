@@ -44,7 +44,8 @@
 }
 
 .entity-card:hover {
-    background: #2d3a4f;
+    background: var(--bg-dark);
+    border-color: var(--accent);
     transform: translateY(-2px);
 }
 

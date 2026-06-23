@@ -49,7 +49,7 @@ const NewsCard = ({ news }) => {
                     {sentimentIcon}
                     <span style={{ fontWeight: 600, textTransform: 'capitalize' }}>{news.sentiment}</span>
                 </div>
-                <h3><a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a></h3>
+                <h3 className="news-title"><a href={news.link} target="_blank" rel="noopener noreferrer">{news.title}</a></h3>
                 <div className="news-meta">
                     <span><IconAuthor size={20} style={{ marginRight: '4px' }} /> {news.author}</span>
                     <span><IconCalendar size={20} style={{ marginRight: '4px' }} /> {formatDate(news.date)}</span>
